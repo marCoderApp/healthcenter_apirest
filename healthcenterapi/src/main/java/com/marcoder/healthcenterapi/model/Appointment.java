@@ -3,7 +3,10 @@ package com.marcoder.healthcenterapi.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -16,8 +19,8 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appointment_id;
-    private String date;
-    private String time;
+    private LocalDate date;
+    private LocalTime time;
     private String status;
     private String reason;
     private LocalDateTime createdAt;
@@ -34,5 +37,9 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name = "consulting_room_id", nullable = false)
     private Consulting_Room consulting_room;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 }

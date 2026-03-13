@@ -1,9 +1,5 @@
-package com.marcoder.healthcenterapi.model;
+package com.marcoder.healthcenterapi.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -13,11 +9,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-public class Patient {
+public class PatientDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long patient_id;
     private String name;
     private String lastname;
