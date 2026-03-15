@@ -1,9 +1,7 @@
 package com.marcoder.healthcenterapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.marcoder.healthcenterapi.enums.UserRole;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -22,11 +20,12 @@ public class User {
     private String lastname;
     private String email;
     private String password;
-    private String role;
+
+    @Enumerated(jakarta.persistence.EnumType.STRING)
+    private UserRole role;
+
     private String address;
     private String phone;
     private String national_id_number;
-
-
 
 }

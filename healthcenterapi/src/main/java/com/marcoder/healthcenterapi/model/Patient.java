@@ -1,9 +1,7 @@
 package com.marcoder.healthcenterapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.marcoder.healthcenterapi.enums.BloodType;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -26,7 +24,10 @@ public class Patient {
     private String phone;
     private String address;
     private String gender;
-    private String blood_type;
+
+    @Enumerated(EnumType.STRING)
+    private BloodType blood_type;
+
     private LocalDate born_date;
 
 }

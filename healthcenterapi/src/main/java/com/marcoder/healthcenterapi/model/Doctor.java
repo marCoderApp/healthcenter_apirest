@@ -1,5 +1,6 @@
 package com.marcoder.healthcenterapi.model;
 
+import com.marcoder.healthcenterapi.enums.DoctorStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,9 @@ public class Doctor {
     private String national_id_number;
     private String email;
     private LocalDateTime started_at;
+
+    @Enumerated(EnumType.STRING)
+    private DoctorStatus status;
 
     @ManyToOne
     @JoinColumn(name = "speciallty_id", nullable = false)
