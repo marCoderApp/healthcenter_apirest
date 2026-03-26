@@ -69,6 +69,11 @@ public class SecurityConfig {
                 ))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST,"/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/branch/**").hasAnyRole("ADMIN", "RECEPCIONIST")
+                        .requestMatchers(HttpMethod.POST,"/branch/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/branch/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/branch/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,"/branch/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated());
                 http.authenticationProvider(authenticationProvider());
                 http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

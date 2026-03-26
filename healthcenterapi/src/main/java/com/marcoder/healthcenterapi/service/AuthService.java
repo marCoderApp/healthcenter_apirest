@@ -49,7 +49,7 @@ public class AuthService implements IAuthService{
                 .address(registerUserDTO.getAddress())
                 .phone(registerUserDTO.getPhone())
                 .national_id_number(registerUserDTO.getNational_id_number())
-                .role(UserRole.RECEPCIONIST)
+                .role(UserRole.valueOf(registerUserDTO.getRole()))
                 .build();
 
         userRepository.save(user);
