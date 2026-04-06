@@ -36,7 +36,7 @@ public class Doctor {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "consulting_room", nullable = false)
+    @JoinColumn(name = "consulting_room_id", nullable = false)
     private Consulting_Room consulting_room;
 
 

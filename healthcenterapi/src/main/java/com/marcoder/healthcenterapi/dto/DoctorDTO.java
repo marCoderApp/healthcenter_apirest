@@ -20,5 +20,6 @@ public class DoctorDTO {
     private String specialty_id;
     private String user_id;
     private String consulting_room_id;
+    private String status;
 
 }

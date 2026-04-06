@@ -84,6 +84,16 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT,"/consulting_room/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/consulting_room/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH,"/consulting_room/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/doctor/**").hasAnyRole("ADMIN", "RECEPCIONIST")
+                        .requestMatchers(HttpMethod.POST,"/doctor/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/doctor/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/doctor/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,"/doctor/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/speciallty/**").hasAnyRole("ADMIN", "RECEPCIONIST")
+                        .requestMatchers(HttpMethod.POST,"/speciallty/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/speciallty/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/speciallty/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,"/speciallty/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated());
                 http.authenticationProvider(authenticationProvider());
                 http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

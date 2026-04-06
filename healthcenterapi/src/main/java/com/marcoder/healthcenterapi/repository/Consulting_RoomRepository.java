@@ -11,6 +11,9 @@ public interface Consulting_RoomRepository extends JpaRepository<Consulting_Room
     @Override
     Optional<Consulting_Room> findById(Long id);
 
+    @Query("SELECT c FROM Consulting_Room c WHERE c.consulting_room_id = :consulting_room_id")
+    Consulting_Room findByConsulting_RoomId(@Param("consulting_room_id") Long consulting_room_id);
+
     @Query("SELECT c FROM Consulting_Room c WHERE c.room_number = :room_number")
     Consulting_Room findByRoomNumber(@Param("room_number") int room_number);
 }

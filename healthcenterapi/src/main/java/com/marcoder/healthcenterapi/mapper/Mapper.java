@@ -1,14 +1,12 @@
 package com.marcoder.healthcenterapi.mapper;
 
 
-import com.marcoder.healthcenterapi.dto.BranchDTO;
-import com.marcoder.healthcenterapi.dto.Consulting_RoomDTO;
-import com.marcoder.healthcenterapi.dto.DepartmentDTO;
-import com.marcoder.healthcenterapi.dto.DoctorDTO;
+import com.marcoder.healthcenterapi.dto.*;
 import com.marcoder.healthcenterapi.model.Branch;
 import com.marcoder.healthcenterapi.model.Consulting_Room;
 import com.marcoder.healthcenterapi.model.Department;
 import com.marcoder.healthcenterapi.model.Doctor;
+import com.marcoder.healthcenterapi.model.Speciallty;
 
 public class Mapper {
 
@@ -63,9 +61,22 @@ public class Mapper {
                 .specialty_id(doctor.getSpeciallty().getSpeciallty_id().toString())
                 .user_id(doctor.getUser().getUser_id().toString())
                 .consulting_room_id(doctor.getConsulting_room().getConsulting_room_id().toString())
+                .status(String.valueOf(doctor.getStatus()))
                 .build();
 
         return doctorDTO;
+    }
+
+    //SPECIALTY TO DTO
+    public static SpecialltyDTO specialtyToDTO(Speciallty speciallty){
+        if(speciallty == null) return null;
+
+        SpecialltyDTO specialltyDTO = SpecialltyDTO.builder()
+                .speciallty_id(speciallty.getSpeciallty_id())
+                .name(speciallty.getName())
+                .build();
+
+        return specialltyDTO;
     }
 
 }
