@@ -22,6 +22,7 @@ public class Doctor {
     private String national_id_number;
     private String email;
     private LocalDateTime started_at;
+    private LocalDateTime ended_at;
 
     @Enumerated(EnumType.STRING)
     private DoctorStatus status;
