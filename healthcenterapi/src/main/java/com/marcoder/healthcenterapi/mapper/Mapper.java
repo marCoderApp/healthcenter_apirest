@@ -2,11 +2,7 @@ package com.marcoder.healthcenterapi.mapper;
 
 
 import com.marcoder.healthcenterapi.dto.*;
-import com.marcoder.healthcenterapi.model.Branch;
-import com.marcoder.healthcenterapi.model.Consulting_Room;
-import com.marcoder.healthcenterapi.model.Department;
-import com.marcoder.healthcenterapi.model.Doctor;
-import com.marcoder.healthcenterapi.model.Speciallty;
+import com.marcoder.healthcenterapi.model.*;
 
 public class Mapper {
 
@@ -79,4 +75,33 @@ public class Mapper {
         return specialltyDTO;
     }
 
+    //USER TO DTO
+
+    public static UserDTO userToDTO(User user){
+        return UserDTO.builder()
+                .user_id(user.getUser_id())
+                .username(user.getUsername())
+                .name(user.getName())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .role(user.getRole() != null ? user.getRole().name() : null)
+                .address(user.getAddress())
+                .phone(user.getPhone())
+                .national_id_number(user.getNational_id_number())
+                .build();
+    }
+
+    //DTO TO USER ENTITY
+    public static User dtoToUserEntity(RegisterUserDTO userDTO){
+        return User.builder()
+                .username(userDTO.getUsername())
+                .email(userDTO.getEmail())
+                .password(userDTO.getPassword())
+                .name(userDTO.getName())
+                .lastname(userDTO.getLastname())
+                .address(userDTO.getAddress())
+                .phone(userDTO.getPhone())
+                .national_id_number(userDTO.getNational_id_number())
+                .build();
+    }
 }
