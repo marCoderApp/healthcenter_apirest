@@ -1,5 +1,6 @@
 package com.marcoder.healthcenterapi.service;
 
+import com.marcoder.healthcenterapi.dto.ChangePasswordDTO;
 import com.marcoder.healthcenterapi.dto.RegisterUserDTO;
 import com.marcoder.healthcenterapi.dto.UpdateUserDTO;
 import com.marcoder.healthcenterapi.dto.UserDTO;
@@ -91,8 +92,20 @@ public class UserService implements IUserService{
 
     //CHANGE PASSWORD
     @Override
-    public String changePassword(UserDTO userDTO, Long id){
-        return null;
+    public String changePassword(ChangePasswordDTO changePasswordDTO,
+                                 Long id){
+       User user = userRepository.findById(id).orElseThrow(
+                ()-> new NotFoundException("User not found with id: " + id)
+        );
+
+       if(!passwordEncoder.matches(changePasswordDTO.getCurrent_password(), user.getPassword())){
+           throw new RuntimeException("Current password is incorrect");
+       }
+
+       String encodedNewPassword = passwordEncoder.encode(changePasswordDTO.getNew_password());
+       user.setPassword(encodedNewPassword);
+       userRepository.save(user);
+       return "Password changed successfully";
     }
 
     //DELETE USER BY ID
