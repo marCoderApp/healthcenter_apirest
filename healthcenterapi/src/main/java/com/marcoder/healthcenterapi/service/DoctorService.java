@@ -9,9 +9,11 @@ import com.marcoder.healthcenterapi.mapper.Mapper;
 import com.marcoder.healthcenterapi.model.Consulting_Room;
 import com.marcoder.healthcenterapi.model.Doctor;
 import com.marcoder.healthcenterapi.model.Speciallty;
+import com.marcoder.healthcenterapi.model.User;
 import com.marcoder.healthcenterapi.repository.Consulting_RoomRepository;
 import com.marcoder.healthcenterapi.repository.DoctorRepository;
 import com.marcoder.healthcenterapi.repository.SpecialltyRepository;
+import com.marcoder.healthcenterapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,9 @@ public class DoctorService implements IDoctorService {
     private Consulting_RoomService consulting_RoomService;
     @Autowired
     private Consulting_RoomRepository consulting_RoomRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     //GET ALL DOCTORS
     @Override
@@ -115,6 +120,9 @@ public class DoctorService implements IDoctorService {
 
         Speciallty speciallty = specialltyRepository.findBySpeciallty_Id(Long.valueOf(doctorDTO.getSpecialty_id()));
         Consulting_Room consultingRoom = consulting_RoomRepository.findByConsulting_RoomId(Long.valueOf(doctorDTO.getConsulting_room_id()));
+        User user = userRepository.findById(Long.valueOf(doctorDTO.getUser_id())).orElseThrow(
+                ()-> new NotFoundException("User not found with id: " + doctorDTO.getUser_id())
+        );
 
         Doctor doctor = Doctor.builder()
                 .license_number(doctorDTO.getLicense_number())
@@ -123,11 +131,15 @@ public class DoctorService implements IDoctorService {
                 .started_at(doctorDTO.getStart_at())
                 .ended_at(doctorDTO.getEnd_at())
                 .status(DoctorStatus.valueOf(doctorDTO.getStatus()))
+                .user(user)
                 .consulting_room(consultingRoom)
                 .speciallty(speciallty)
                 .build();
 
         Doctor savedDoctor = doctorRepository.save(doctor);
+
+
+
         return Mapper.doctorToDTO(savedDoctor);
     }
 

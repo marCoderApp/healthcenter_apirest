@@ -28,14 +28,14 @@ public class SpecialltyController {
     }
 
     //GET SPECIALLTY BY NAME
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<SpecialltyDTO> getSpecialltiesByName(@PathVariable String name){
         return ResponseEntity.ok(specialltyService.getSpecialltiesByName(name));
     }
 
     //SAVE SPECIALLTY
     @PostMapping
-    public ResponseEntity<SpecialltyDTO> saveSpeciallty(SpecialltyDTO specialltyDTO){
+    public ResponseEntity<SpecialltyDTO> saveSpeciallty(@RequestBody SpecialltyDTO specialltyDTO){
         return ResponseEntity.ok(specialltyService.saveSpeciallty(specialltyDTO));
     }
 
