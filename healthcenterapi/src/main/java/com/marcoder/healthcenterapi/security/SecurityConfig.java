@@ -99,6 +99,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT,"/speciallty/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/speciallty/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH,"/speciallty/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/patient/**").hasAnyRole("ADMIN", "RECEPCIONIST")
+                        .requestMatchers(HttpMethod.POST,"/patient/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/patient/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/patient/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,"/patient/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated());
                 http.authenticationProvider(authenticationProvider());
                 http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

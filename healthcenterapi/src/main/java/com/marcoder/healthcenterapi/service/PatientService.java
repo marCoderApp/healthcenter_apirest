@@ -40,9 +40,6 @@ public class PatientService implements IPatientService{
     //SAVE PATIENT
     @Override
     public PatientDTO savePatient(PatientDTO patientDTO){
-        if (patientDTO.getPatient_id() == null){
-            throw new IllegalArgumentException("Patient id is required");
-        }
 
         Patient patient = patientRepository.findByNationalIdNumber(patientDTO.getNational_id_number());
 
@@ -58,7 +55,7 @@ public class PatientService implements IPatientService{
                 .phone(patientDTO.getPhone())
                 .address(patientDTO.getAddress())
                 .gender(patientDTO.getGender())
-                .blood_type(BloodType.valueOf(String.valueOf(patientDTO.getBlood_type())))
+                .blood_type(BloodType.valueOf(patientDTO.getBlood_type()))
                 .born_date(patientDTO.getBorn_date())
                 .build();
 

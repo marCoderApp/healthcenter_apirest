@@ -35,7 +35,7 @@ public class PatientController {
     }
 
     //SAVE PATIENT
-    @GetMapping("/save")
+    @PostMapping("/save")
     public ResponseEntity<PatientDTO> savePatient(@RequestBody PatientDTO patientDTO){
         return ResponseEntity.ok(patientService.savePatient(patientDTO));
     }

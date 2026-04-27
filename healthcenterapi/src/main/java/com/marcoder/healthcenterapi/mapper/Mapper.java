@@ -117,6 +117,9 @@ public class Mapper {
                 .email(patient.getEmail())
                 .phone(patient.getPhone())
                 .address(patient.getAddress())
+                .gender(patient.getGender())
+                .blood_type(patient.getBlood_type().name())
+                .born_date(patient.getBorn_date())
                 .build();
     }
 
