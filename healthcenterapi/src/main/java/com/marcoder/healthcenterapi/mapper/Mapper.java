@@ -104,4 +104,20 @@ public class Mapper {
                 .national_id_number(userDTO.getNational_id_number())
                 .build();
     }
+
+    //PATIENT TO DTO
+    public static PatientDTO patientToDTO(Patient patient){
+        if(patient == null) return null;
+
+        return PatientDTO.builder()
+                .patient_id(patient.getPatient_id())
+                .name(patient.getName())
+                .lastname(patient.getLastname())
+                .national_id_number(patient.getNational_id_number())
+                .email(patient.getEmail())
+                .phone(patient.getPhone())
+                .address(patient.getAddress())
+                .build();
+    }
+
 }
