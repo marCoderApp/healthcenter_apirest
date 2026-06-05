@@ -123,4 +123,25 @@ public class Mapper {
                 .build();
     }
 
+    //APPOINTMENT TO DTO
+    public static AppointmentDTO appointmentToDTO(Appointment appointment){
+        if(appointment == null) return null;
+
+        AppointmentDTO dto = AppointmentDTO.builder()
+                .appointment_id(appointment.getAppointment_id())
+                .date(appointment.getDate())
+                .time(appointment.getTime())
+                .status(appointment.getStatus())
+                .reason(appointment.getReason())
+                .doctor_id(appointment.getDoctor().getDoctor_id().toString())
+                .patient_id(appointment.getPatient().getPatient_id().toString())
+                .user_id(appointment.getUser().getUser_id().toString())
+                .doctor_id(appointment.getDoctor().getDoctor_id().toString())
+                .consulting_room_id(appointment.getConsulting_room().getConsulting_room_id().toString())
+                .createdAt(appointment.getCreatedAt())
+                .updatedAt(appointment.getUpdatedAt())
+                .build();
+
+    }
+
 }
