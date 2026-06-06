@@ -1,10 +1,12 @@
 package com.marcoder.healthcenterapi.repository;
 
+import com.marcoder.healthcenterapi.enums.AppointmentStatus;
 import com.marcoder.healthcenterapi.model.Appointment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
@@ -23,8 +25,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
 
     //GET ALL APPOINTMENTS BY DATE
     @Query("SELECT a FROM Appointment a WHERE a.date = :date")
-    List<Appointment> getAppointmentsByDate(@Param("date") String date);
+    List<Appointment> getAppointmentsByDate(@Param("date") LocalDate date);
 
     //GET ALL APPOINTMENTS BY STATUS
-    @Query()
+    @Query("SELECT a FROM Appointment a WHERE a.status = :status")
+    List<Appointment> getAppointmentsByStatus(@Param("status") AppointmentStatus status);
 }

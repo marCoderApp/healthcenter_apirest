@@ -1,7 +1,9 @@
 package com.marcoder.healthcenterapi.model;
 
+import com.marcoder.healthcenterapi.enums.AppointmentStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.boot.models.xml.spi.XmlDocument;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -21,10 +23,15 @@ public class Appointment {
     private Long appointment_id;
     private LocalDate date;
     private LocalTime time;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status;
+
     private String reason;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String updatedBy = null;
+
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)

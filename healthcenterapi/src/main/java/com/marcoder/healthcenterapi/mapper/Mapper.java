@@ -76,7 +76,6 @@ public class Mapper {
     }
 
     //USER TO DTO
-
     public static UserDTO userToDTO(User user){
         return UserDTO.builder()
                 .user_id(user.getUser_id())
@@ -131,16 +130,18 @@ public class Mapper {
                 .appointment_id(appointment.getAppointment_id())
                 .date(appointment.getDate())
                 .time(appointment.getTime())
-                .status(appointment.getStatus())
+                .status(String.valueOf(appointment.getStatus()))
                 .reason(appointment.getReason())
                 .doctor_id(appointment.getDoctor().getDoctor_id().toString())
+                .updatedBy(appointment.getUpdatedBy())
                 .patient_id(appointment.getPatient().getPatient_id().toString())
                 .user_id(appointment.getUser().getUser_id().toString())
-                .doctor_id(appointment.getDoctor().getDoctor_id().toString())
                 .consulting_room_id(appointment.getConsulting_room().getConsulting_room_id().toString())
                 .createdAt(appointment.getCreatedAt())
                 .updatedAt(appointment.getUpdatedAt())
                 .build();
+
+        return dto;
 
     }
 

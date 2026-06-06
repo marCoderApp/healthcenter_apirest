@@ -1,6 +1,8 @@
 package com.marcoder.healthcenterapi.service;
 
 import com.marcoder.healthcenterapi.dto.AppointmentDTO;
+import com.marcoder.healthcenterapi.dto.UpdateAppointmentDTO;
+import com.marcoder.healthcenterapi.enums.AppointmentStatus;
 import com.marcoder.healthcenterapi.exception.NotFoundException;
 import com.marcoder.healthcenterapi.mapper.Mapper;
 import com.marcoder.healthcenterapi.model.*;
@@ -8,7 +10,11 @@ import com.marcoder.healthcenterapi.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -79,14 +85,14 @@ public class AppointmentService implements IAppointmentService{
         Appointment appointment = Appointment.builder()
                 .date(appointmentDTO.getDate())
                 .time(appointmentDTO.getTime())
-                .status(appointmentDTO.getStatus())
+                .status(AppointmentStatus.valueOf(appointmentDTO.getStatus()))
                 .reason(appointmentDTO.getReason())
                 .patient(patient)
                 .doctor(doctor)
                 .consulting_room(consultingRoom)
                 .user(user)
                 .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
+                .updatedAt(null)
                 .build();
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
@@ -95,13 +101,73 @@ public class AppointmentService implements IAppointmentService{
 
     //UPDATE APPOINTMENT BY ID
     @Override
-    public AppointmentDTO updateAppointment(Long id, AppointmentDTO appointmentDTO){
-        return null;
+    public AppointmentDTO updateAppointment(Long id, UpdateAppointmentDTO
+            appointmentDTO){
+        if (id == null){
+            throw new IllegalArgumentException("Appointment id is required");
+        }
+
+        if(appointmentDTO == null){
+            throw new IllegalArgumentException("Appointment is required");
+        }
+
+        Appointment appointment = appointmentRepository.findById(id).orElseThrow(
+                () ->  new NotFoundException("Appointment not found with id: " + id)
+        );
+
+        appointment.setDate(appointmentDTO.getDate());
+        appointment.setTime(appointmentDTO.getTime());
+        appointment.setStatus(AppointmentStatus.valueOf(appointmentDTO.getStatus()));
+        appointment.setUpdatedBy(appointmentDTO.getUpdatedBy());
+        appointment.setUpdatedAt(LocalDateTime.now());
+
+        Appointment updatedAppointment = appointmentRepository.save(appointment);
+
+        return Mapper.appointmentToDTO(updatedAppointment);
+
+
     }
 
     //GET APPOINTMENTs BY DATE
+    @Override
+    public List<AppointmentDTO> getAppointmentsByDate(String date){
+        if(date == null){
+            throw new IllegalArgumentException("Appointment date is required");
+        }
+
+        List<AppointmentDTO> dtos = appointmentRepository
+                .getAppointmentsByDate(LocalDate.parse(date))
+                .stream().map(Mapper::appointmentToDTO)
+                .toList();
+
+        if (dtos.isEmpty() || dtos == null) {
+            throw new NotFoundException("Appointments not found");
+        }
+
+        return dtos;
+    }
 
     //GET APPOINTMENT BY STATUS
+    @Override
+    public List<AppointmentDTO> getAppointmentsByStatus(String status){
+        if(status == null){
+            throw new IllegalArgumentException("Appointment status is required");
+        }
+
+        List<Appointment> appointments = appointmentRepository
+                .getAppointmentsByStatus(AppointmentStatus.valueOf(status));
+
+        if (appointments.isEmpty() ||appointments == null) {
+            throw new RuntimeException("No appointments found");
+        }
+
+        List<AppointmentDTO> dtos = appointments
+                .stream()
+                .map(Mapper::appointmentToDTO)
+                .toList();
+
+        return dtos;
+    }
 
     //GET APPOINTMENT BY DOCTOR
     @Override
@@ -156,7 +222,7 @@ public class AppointmentService implements IAppointmentService{
         }
 
         List<Appointment> appointments = appointmentRepository
-                .getAppointmentsByDate(String.valueOf(consulting_room_id));
+                .getAppointmentsByConsultingRoomId(consulting_room_id);
 
         if (appointments == null){
             throw new NotFoundException("No appointments found for" +
@@ -173,12 +239,20 @@ public class AppointmentService implements IAppointmentService{
 
     //DELETE APPOINTMENT BY ID
     @Override
-    public String deleteAppointment(Long id){
+    public String deleteAppointment(Long id, String updatedBy){
         if(id == null){
             throw new IllegalArgumentException("Appointment id is required");
         }
 
-        appointmentRepository.deleteById(id);
+        Appointment appointment = appointmentRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("Appointment not found with id: " + id)
+        );
+
+        appointment.setStatus(AppointmentStatus.valueOf("CANCELLED"));
+        appointment.setUpdatedAt(LocalDateTime.now());
+        appointment.setUpdatedBy(updatedBy);
+        appointmentRepository.save(appointment);
+
         return "Appointment deleted successfully";
     }
 

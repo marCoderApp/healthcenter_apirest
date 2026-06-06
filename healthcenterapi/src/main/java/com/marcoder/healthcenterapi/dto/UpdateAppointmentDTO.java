@@ -8,22 +8,15 @@ import java.time.LocalTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class AppointmentDTO {
+public class UpdateAppointmentDTO {
 
-    private Long appointment_id;
-    private LocalDate date;
     private LocalTime time;
+    private LocalDate date;
     private String status;
-    private String reason;
-    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String updatedBy;
-    private String patient_id;
-    private String user_id;
-    private String doctor_id;
-    private String consulting_room_id;
 
 }
