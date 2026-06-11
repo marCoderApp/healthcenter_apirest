@@ -16,11 +16,27 @@ public class Medical_Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long medical_record_id;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String symptoms;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String diagnosis;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String treatment_notes;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String observations;
+
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String updatedBy = null;
+    private Boolean isActive = true;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)

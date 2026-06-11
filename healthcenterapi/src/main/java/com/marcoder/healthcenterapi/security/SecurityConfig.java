@@ -104,6 +104,17 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT,"/patient/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/patient/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH,"/patient/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/appointment/**").hasAnyRole("ADMIN", "RECEPCIONIST")
+                        .requestMatchers(HttpMethod.GET,"/appointment/get_by_doctor/**").hasAnyRole("ADMIN", "RECEPCIONIST","DOCTOR")
+                        .requestMatchers(HttpMethod.POST,"/appointment/**").hasAnyRole("ADMIN", "RECEPCIONIST")
+                        .requestMatchers(HttpMethod.PUT,"/appointment/**").hasAnyRole("ADMIN", "RECEPCIONIST")
+                        .requestMatchers(HttpMethod.DELETE,"/appointment/**").hasAnyRole("ADMIN", "RECEPCIONIST")
+                        .requestMatchers(HttpMethod.PATCH,"/appointment/**").hasAnyRole("ADMIN", "RECEPCIONIST")
+                        .requestMatchers(HttpMethod.GET,"/medical_records/**").hasAnyRole("DOCTOR","ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/medical_records/**").hasAnyRole("DOCTOR")
+                        .requestMatchers(HttpMethod.PUT,"/medical_records/**").hasAnyRole("DOCTOR")
+                        .requestMatchers(HttpMethod.DELETE,"/medical_records/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,"/medical_records/**").hasAnyRole("DOCTOR", "ADMIN")
                         .anyRequest().authenticated());
                 http.authenticationProvider(authenticationProvider());
                 http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

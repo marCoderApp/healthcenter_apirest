@@ -145,4 +145,29 @@ public class Mapper {
 
     }
 
+    //MEDICAL RECORD TO DTO
+    public static Medical_RecordDTO medicalRecordToDTO(Medical_Record medicalRecord){
+        if(medicalRecord == null){
+            throw new IllegalArgumentException("Medical Record cannot be null");
+        }
+
+        Medical_RecordDTO dto = Medical_RecordDTO.builder()
+                .medical_record_id(medicalRecord.getMedical_record_id())
+                .symptoms(medicalRecord.getSymptoms())
+                .diagnosis(medicalRecord.getDiagnosis())
+                .treatment_notes(medicalRecord.getTreatment_notes())
+                .observations(medicalRecord.getObservations())
+                .createdAt(medicalRecord.getCreatedAt())
+                .updatedAt(medicalRecord.getUpdatedAt())
+                .updatedBy(medicalRecord.getUpdatedBy())
+                .patient_id(medicalRecord.getPatient().getPatient_id().toString())
+                .doctor_id(medicalRecord.getDoctor().getDoctor_id().toString())
+                .appointment_id(medicalRecord.getAppointment().getAppointment_id().toString())
+                .isActive(medicalRecord.getIsActive())
+                .build();
+
+        return dto;
+
+    }
+
 }
