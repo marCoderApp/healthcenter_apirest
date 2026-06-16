@@ -54,7 +54,7 @@ public class MedicalRecordController {
     }
 
     //DELETE MEDICAL RECORD
-    @DeleteMapping("/delete/{id}")
+    @PatchMapping("/deactivate/{id}")
     public String deactivateMedicalRecord(@PathVariable Long id){
         return medicalRecordService.deactivateMedicalRecord(id);
     }
