@@ -21,6 +21,7 @@ public class Prescription {
     private String frequency;
     private String duration;
     private LocalDateTime created_at;
+    private Boolean isValid;
 
     @ManyToOne
     @JoinColumn(name = "medical_record_id", nullable = false)

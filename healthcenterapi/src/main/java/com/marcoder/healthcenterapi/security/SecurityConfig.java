@@ -115,6 +115,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT,"/medical_records/**").hasAnyRole("DOCTOR")
                         .requestMatchers(HttpMethod.DELETE,"/medical_records/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH,"/medical_records/**").hasAnyRole("DOCTOR", "ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/prescription/**").hasAnyRole("DOCTOR","ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/prescription/**").hasAnyRole("DOCTOR")
+                        .requestMatchers(HttpMethod.PUT,"/prescription/**").hasAnyRole("DOCTOR")
+                        .requestMatchers(HttpMethod.DELETE,"/prescription/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,"/prescription/**").hasAnyRole("DOCTOR", "ADMIN")
                         .anyRequest().authenticated());
                 http.authenticationProvider(authenticationProvider());
                 http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

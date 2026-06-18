@@ -17,6 +17,7 @@ public class PrescriptionDTO {
     private String frequency;
     private String duration;
     private LocalDateTime created_at;
+    private Boolean isValid;
     private String medical_record_id;
 
 }

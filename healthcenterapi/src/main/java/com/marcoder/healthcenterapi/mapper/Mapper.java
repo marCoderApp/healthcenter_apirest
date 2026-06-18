@@ -170,4 +170,24 @@ public class Mapper {
 
     }
 
+    //PRESCRIPTION TO DTO
+    public static PrescriptionDTO prescriptionToDTO(Prescription prescription){
+        if(prescription == null){
+            throw new IllegalArgumentException("Prescription cannot be null");
+        }
+
+        PrescriptionDTO dto = PrescriptionDTO.builder()
+                .prescription_id(prescription.getPrescription_id())
+                .medication_name(prescription.getMedication_name())
+                .dosage(prescription.getDosage())
+                .frequency(prescription.getFrequency())
+                .duration(prescription.getDuration())
+                .created_at(prescription.getCreated_at())
+                .medical_record_id(prescription.getMedical_record().getMedical_record_id().toString())
+                .isValid(prescription.getIsValid())
+                .build();
+
+        return dto;
+    }
+
 }
